@@ -2,9 +2,11 @@ import numpy as np
 import geopandas as gpd
 import pandas as pd
 import xarray as xr
+import rasterio as rio
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 
+from numba import jit
 from rasterio import Affine, features
 
 
@@ -61,6 +63,16 @@ def rescale(arr, min_val, max_val):
     return arr
 
 
+def rio_read_all_bands(file_path):
+    with rio.open(file_path, "r") as src:
+        n_bands = src.count
+        arr = np.zeros((src.count, src.height, src.width))
+        for i in range(n_bands):
+            arr[i] = src.read(i+1)
+    return arr
+
+
+@jit(nopython=True, parallel=True)
 def normalized_ratio(a, b):
     return (a - b) / (a + b)
 
