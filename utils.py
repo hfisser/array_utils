@@ -61,6 +61,10 @@ def rescale(arr, min_val, max_val):
     return arr
 
 
+def normalized_ratio(a, b):
+    return (a - b) / (a + b)
+
+
 def plot_img(img):
     if isinstance(img, str):
         img = mpimg.imread(img)
