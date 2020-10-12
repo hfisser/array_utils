@@ -53,7 +53,7 @@ def lat_from_meta(meta):
         t, h = meta["transform"], meta["height"]
     except KeyError as e:
         raise e
-    return np.arange(t[5], t[5] + (t[4] * h), h)
+    return np.arange(t[5], t[5] + (t[4] * h), t[4])
 
 
 def lon_from_meta(meta):
@@ -61,7 +61,7 @@ def lon_from_meta(meta):
         t, w = meta["transform"], meta["width"]
     except KeyError as e:
         raise e
-    return np.arange(t[2], t[2] + (t[0] * w), w)
+    return np.arange(t[2], t[2] + (t[0] * w), t[0])
 
 
 def rasterize(polygons, lat, lon, fill=np.nan):
