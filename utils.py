@@ -65,11 +65,12 @@ def rescale(arr, min_val, max_val):
 
 def rio_read_all_bands(file_path):
     with rio.open(file_path, "r") as src:
+        meta = src.meta
         n_bands = src.count
         arr = np.zeros((src.count, src.height, src.width))
         for i in range(n_bands):
             arr[i] = src.read(i+1)
-    return arr
+    return arr, meta
 
 
 @jit(nopython=True, parallel=True)
